@@ -742,6 +742,8 @@ selection_2021 <- b__es_deces_et_pop_par_annee_agequinq %>%
 es_deces_et_pop_2021_par_agequinq_for_bind_rows <- es_deces_et_pop_2021_par_agequinq_for_bind_rows %>% 
   filter(!(geo %in% selection_2021$geo))
 
+if (shallDeleteVars) rm(selection_2021)
+
 #Ajouter les données 2021 et 2022
 b__es_deces_et_pop_par_annee_agequinq <- b__es_deces_et_pop_par_annee_agequinq %>%
   bind_rows(es_deces_et_pop_2021_par_agequinq_for_bind_rows) %>%
@@ -789,6 +791,8 @@ es_deces_complet_DE <- es_deces_complet_DE %>%
 es_pjan_quinq_de_2021_2022 <- es_pjan_quinq_2021 %>% rbind(es_pjan_quinq_2022) %>%  filter(geo=="DE"&time>="2021-01-01")
 es_deces_complet_DE <-  es_pjan_quinq_de_2021_2022 %>% left_join(es_deces_complet_DE)
 
+if (shallDeleteVars) rm(es_pjan_quinq_2022)
+
 #extraire les moins de 40 ans
 es_deces_complet_DE_lt40 <- es_deces_complet_DE %>%
   filter(agequinq %in% c("Y_LT5", "Y5-9", "Y10-14", "Y15-19", "Y20-24", "Y25-29", "Y30-34", "Y35-39"))
@@ -835,6 +839,8 @@ es_deces_2022_tot_DE<-es_deces_2022_tot_DE %>%
   select(-deces2022)%>% 
   left_join(es_pjan_quinq_de_2021_2022)
 
+if (shallDeleteVars) rm(es_pjan_quinq_de_2021_2022)
+
 #concaténer les lignes à ajouter
 es_deces_2021_2022_tot_DE <- es_deces_2021_tot_DE %>%
   rbind(es_deces_2022_tot_DE) %>% 
@@ -863,11 +869,21 @@ b__es_deces_et_pop_par_annee_agequinq <- b__es_deces_et_pop_par_annee_agequinq %
 
 if (shallDeleteVars) rm(es_deces_complet_DE)
 if (shallDeleteVars) rm(es_deces_2019_complet_DE)
+
 if (shallDeleteVars) rm(es_deces_2021_tot_by_agequinq_sex_geo)
 if (shallDeleteVars) rm(es_deces_2021_tot_DE)
 if (shallDeleteVars) rm(es_pjan_quinq_2021)
-if (shallDeleteVars) rm(es_pjan_quinq_de_2021)
-if (shallDeleteVars) rm(es_pop2021_by_agequinq)
+
+if (shallDeleteVars) rm(es_deces_2021_2022_tot_DE)
+
+if (shallDeleteVars) rm(es_deces_2022_tot_DE)
+if (shallDeleteVars) rm(es_deces_2022_tot_DE_F)
+if (shallDeleteVars) rm(es_deces_2022_tot_DE_M)
+if (shallDeleteVars) rm(es_deces_2022_tot_by_agequinq_sex_geo)
+
+if (shallDeleteVars) rm()
+if (shallDeleteVars) rm()
+if (shallDeleteVars) rm()
 
 ##----------------------------------------------------------------------------##
 #
@@ -1083,15 +1099,9 @@ anglais <- anglais %>% rbind(great_britain)
 b__es_deces_et_pop_par_annee_agequinq <- b__es_deces_et_pop_par_annee_agequinq %>% filter(geo!="IR")
 b__es_deces_et_pop_par_annee_agequinq <- b__es_deces_et_pop_par_annee_agequinq %>% rbind(anglais)
 
-if (shallDeleteVars) rm(deces_agequinq_concat)
-if (shallDeleteVars) rm(deces_concat)
-if (shallDeleteVars) rm(deces_england)
-if (shallDeleteVars) rm(deces_ireland)
-if (shallDeleteVars) rm(deces_northern_ireland)
-if (shallDeleteVars) rm(deces_scotland)
-if (shallDeleteVars) rm(deces_wales)
 if (shallDeleteVars) rm(population_agequinq_concat)
 if (shallDeleteVars) rm(population_concat)
+
 if (shallDeleteVars) rm(population_england)
 if (shallDeleteVars) rm(population_ireland)
 if (shallDeleteVars) rm(population_northern_ireland)
@@ -1100,6 +1110,27 @@ if (shallDeleteVars) rm(population_wales)
 if (shallDeleteVars) rm(great_britain)
 if (shallDeleteVars) rm(anglais)
 if (shallDeleteVars) rm(anglais2020)
+
+if (shallDeleteVars) rm(col_population_england)
+if (shallDeleteVars) rm(col_population_ireland)
+if (shallDeleteVars) rm(col_population_northern_ireland)
+if (shallDeleteVars) rm(col_population_scotland)
+if (shallDeleteVars) rm(col_population_wales)
+
+if (shallDeleteVars) rm(deces_concat)
+if (shallDeleteVars) rm(deces_england)
+if (shallDeleteVars) rm(deces_ireland)
+if (shallDeleteVars) rm(deces_northern_ireland)
+if (shallDeleteVars) rm(deces_scotland)
+if (shallDeleteVars) rm(deces_wales)
+
+if (shallDeleteVars) rm(col_deces_england)
+if (shallDeleteVars) rm(col_deces_ireland)
+if (shallDeleteVars) rm(col_deces_northern_ireland)
+if (shallDeleteVars) rm(col_deces_scotland)
+if (shallDeleteVars) rm(col_deces_wales)
+
+if (shallDeleteVars) rm(deces_agequinq_concat)
 
 
 ##----------------------------------------------------------------------------##
@@ -1139,6 +1170,8 @@ es_FR_pop2020_by_agequinq_sex_T <- es_FR_pop2020_by_agequinq_sex %>%
 
 es_FR_pop2020_by_agequinq_sex <- es_FR_pop2020_by_agequinq_sex %>% rbind(es_FR_pop2020_by_agequinq_sex_T)
 
+if (shallDeleteVars) rm(es_FR_pop2020_by_agequinq_sex_T)
+
 # Regrouper les plus de 90 avec les 85-89
 es_FR_pop2020_ge85 <- es_FR_pop_pop2020_deces2020 %>%
 		filter(agequinq %in% c("Y85-89", "Y_GE90")) %>%
@@ -1161,6 +1194,7 @@ es_FR_pop2020_by_agequinq_sex <- es_FR_pop2020_by_agequinq_sex %>%
 		rbind(es_FR_pop2020_ge85)  
 
 if (shallDeleteVars) rm(es_FR_pop2020_ge85)
+if (shallDeleteVars) rm(es_FR_pop2020_ge85_T)
 
 # Ajouter la colonne pop_france2020 sur chaque tranche d'age de chaque pays
 b__es_deces_et_pop_par_annee_agequinq <- b__es_deces_et_pop_par_annee_agequinq %>%
@@ -1391,6 +1425,8 @@ es_pjan_quinq_pop_2020_France <- es_pjan_quinq %>%
 		filter(geo == "FR") %>%
 		group_by(agequinq, geo, time) %>% 
 		summarise(population=sum(population)) 
+
+if (shallDeleteVars) rm(es_pjan_quinq)
 
 es_pjan_quinq_pop_2020_France <- ungroup(es_pjan_quinq_pop_2020_France) %>%
 		select(-time, -geo) %>% 
@@ -1949,7 +1985,7 @@ if (shallDeleteVars) rm(numSemaineDepuis2013_for_eu_lockdown_end)
 
 ##----------------------------------------------------------------------------##
 #
-# Recuperation des donnees de vaccination par age
+##### Recuperation des donnees de vaccination par age ####
 #
 ##----------------------------------------------------------------------------##
 
@@ -2957,11 +2993,11 @@ b__es_deces_week_standardises_si_pop_2020_owid_vaccination <- b__es_deces_week_s
 				new_cases_var = new_cases - new_cases_prec,
 				new_vaccinations_var = new_vaccinations - new_vaccinations_prec)
 
-##----------------------------------------------------------------------------##
+##-------------------------------------------------------------------------------------##
 #
-# Insertion d'une régression linéaire des décès hebdomadaires basée sur 2013-2018
+#### Insertion d'une régression linéaire des décès hebdomadaires basée sur 2013-2018 #### 
 #
-##----------------------------------------------------------------------------##
+##-------------------------------------------------------------------------------------##
 
 b__es_deces_week_standardises_si_pop_2020_owid_vaccination <- b__es_deces_week_standardises_si_pop_2020_owid_vaccination %>% 
   mutate(semaine = str_sub(time,6,8),
@@ -2969,7 +3005,7 @@ b__es_deces_week_standardises_si_pop_2020_owid_vaccination <- b__es_deces_week_s
 
 
 annees_13_18 <- ungroup(b__es_deces_week_standardises_si_pop_2020_owid_vaccination) %>% 
-  filter(!(str_sub(time,1,4)=="2020"|str_sub(time,1,4)=="2021"|str_sub(time,1,4)=="2019"))%>%
+  filter(!(str_sub(time,1,4)=="2019"|str_sub(time,1,4)=="2020"|str_sub(time,1,4)=="2021"|str_sub(time,1,4)=="2022"|str_sub(time,1,4)=="2023"|str_sub(time,1,4)=="2024"))%>%
   select(semaine,annee,geo,
          deces_tot_15_24,
          deces_tot_25_49,
@@ -3092,7 +3128,7 @@ b__es_deces_week_standardises_si_pop_2020_owid_vaccination<-b__es_deces_week_sta
 #Faire la régression sur les décès standards
 
 annees_13_18 <- ungroup(b__es_deces_week_standardises_si_pop_2020_owid_vaccination) %>% 
-  filter(!(str_sub(time,1,4)=="2020"|str_sub(time,1,4)=="2021"|str_sub(time,1,4)=="2019"))%>%
+  filter(!(str_sub(time,1,4)=="2019"|str_sub(time,1,4)=="2020"|str_sub(time,1,4)=="2021"|str_sub(time,1,4)=="2022"|str_sub(time,1,4)=="2023"|str_sub(time,1,4)=="2024"))%>%
   filter(geo!="UK") %>% 
   select(semaine,annee,geo,
          deces_standardises_si_pop_2020_15_24,
@@ -3254,6 +3290,8 @@ sigma <- sigma %>% group_by(geo,semaine) %>%
 b__es_deces_week_standardises_si_pop_2020_owid_vaccination <- b__es_deces_week_standardises_si_pop_2020_owid_vaccination %>% 
   left_join(sigma)
 
+if (shallDeleteVars) rm(sigma)
+
 #calcul des z-scores
 
 b__es_deces_week_standardises_si_pop_2020_owid_vaccination <- b__es_deces_week_standardises_si_pop_2020_owid_vaccination %>% 
@@ -3298,6 +3336,8 @@ patrick <- b__es_deces_week_standardises_si_pop_2020_owid_vaccination %>%
 
 saveRDS(patrick, file="gen/rds/patrick.RDS")
 
+if (shallDeleteVars) rm(patrick)
+
 
 #
 # Deces standardisés par pays, par semaine + confinements + vaccinations
@@ -3328,5 +3368,17 @@ write.table(b__es_deces_et_pop_par_annee_agequinq, "gen/csv/Eurostat_deces_par_a
 
 
 if (shallDeleteVars) rm(pays_geo_nom_zone)
+
+if (shallDeleteVars) rm(deces2020)
+if (shallDeleteVars) rm(donnees_semaine_pays)
+if (shallDeleteVars) rm(donnees_semaine_pays_hors_allemagne)
+if (shallDeleteVars) rm(a__original_es_deces_annuel_le2020)
+if (shallDeleteVars) rm(a__original_es_deces_week)
+if (shallDeleteVars) rm(a__original_es_pjan_le2020)
+if (shallDeleteVars) rm(a__original_es_proj)
+if (shallDeleteVars) rm(a__original_eu_mesures)
+if (shallDeleteVars) rm(a__original_owid_covid_data)
+if (shallDeleteVars) rm(b__ined_covid_data_regroupe)
+if (shallDeleteVars) rm(b__owid_covid_data)
 
 message("Terminé 010")
