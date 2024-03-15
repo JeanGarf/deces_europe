@@ -168,23 +168,21 @@ a__f_downloadIfNeeded <- function(sourceType = K_SOURCE_TYPE_CSV,
 				#
 				# Charger le fichier CSV depuis son URL (crée un Tibble)
 				#
-
-				# Utiliser CURL comme méthode de téléchargement
-				# Nécessite que curl soit dans le path
-				options(download.file.method="curl") 
 				
 				# Télécharger dans un fichier temporaire
 				tf <- tempfile()
-				download.file(UrlOrEuroStatNameToDownload, tf)
+				
+				# Utiliser CURL comme méthode de téléchargement
+				# Nécessite que curl soit dans le path
+				curl::curl_download(url = UrlOrEuroStatNameToDownload, 
+						destfile = tf, 
+						quiet = FALSE)
 				
 				# Lire le CSV
 				downloadedDatas <- read_csv(file = tf)
 				
 				# Supprimer le fichier temporaire
 				rm(tf)
-				
-				# Remettre la méthode standard de téléchargement
-				options(download.file.method="auto")
 				
 				downloaded = TRUE
 				
